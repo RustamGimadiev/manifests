@@ -5,9 +5,6 @@ metadata:
   name: ml-pipeline-ui
 spec:
   template:
-    metadata:
-      labels:
-        app: ml-pipeline-ui
     spec:
       volumes:
         - name: config-volume
@@ -35,9 +32,6 @@ metadata:
   name: ml-pipeline
 spec:
   template:
-    metadata:
-      labels:
-        app: ml-pipeline
     spec:
       containers:
         - env:
