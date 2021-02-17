@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache-server
+  # namespace: kubeflow
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: DBCONFIG_HOST_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: aws-rds-address
+              name: aws-config
+        - name: DBCONFIG_USER
+          valueFrom:
+            configMapKeyRef:
+              key: aws-rds-username
+              name: aws-config
+        - name: DBCONFIG_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: aws-rds-password
+              name: aws-config

@@ -1,0 +1,88 @@
+$patch: replace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-pipeline-ui
+spec:
+  template:
+    metadata:
+      labels:
+        app: ml-pipeline-ui
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ml-pipeline-ui-configmap
+      containers:
+        - name: ml-pipeline-ui
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: aws-config
+                  key: aws-secret-access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: aws-config
+                  key: aws-access-key-id
+
+---
+$patch: replace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-pipeline
+spec:
+  template:
+    metadata:
+      labels:
+        app: ml-pipeline
+    spec:
+      containers:
+        - env:
+            - name: OBJECTSTORECONFIG_SECURE
+              value: "true"
+            - name: OBJECTSTORECONFIG_BUCKETNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: aws-config
+                  key: aws-s3-bucket-name
+            - name: OBJECTSTORECONFIG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: aws-config
+                  key: aws-s3-endpoint
+            - name: OBJECTSTORECONFIG_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: aws-config
+                  key: aws-s3-region
+            - name: OBJECTSTORECONFIG_PORT
+              value: ""
+            - name: DBCONFIG_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: aws-rds-username
+                  name: aws-config
+            - name: DBCONFIG_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: aws-rds-password
+                  name: aws-config
+            - name: DBCONFIG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: aws-rds-address
+                  name: aws-config
+            - name: OBJECTSTORECONFIG_ACCESSKEY
+              valueFrom:
+                configMapKeyRef:
+                  key: aws-access-key-id
+                  name: aws-config
+            - name: OBJECTSTORECONFIG_SECRETACCESSKEY
+              valueFrom:
+                configMapKeyRef:
+                  key: aws-secret-access-key
+                  name: aws-config
+          name: ml-pipeline-api-server
