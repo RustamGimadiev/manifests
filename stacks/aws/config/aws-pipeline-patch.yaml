@@ -58,8 +58,6 @@ spec:
                 configMapKeyRef:
                   name: aws-config
                   key: aws-s3-region
-            - name: OBJECTSTORECONFIG_PORT
-              value: ""
             - name: DBCONFIG_USER
               valueFrom:
                 configMapKeyRef:
