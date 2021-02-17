@@ -1,4 +1,3 @@
-$patch: replace
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +24,6 @@ spec:
                   key: aws-access-key-id
 
 ---
-$patch: replace
 apiVersion: apps/v1
 kind: Deployment
 metadata:
