@@ -40,7 +40,7 @@ generatorOptions:
 secretGenerator:
 - name: aws-secrets
   envs:
-  - ./config/aws.env
+  - ./config/params.env
 configMapGenerator:
 - name: workflow-controller-configmap
   namespace: kubeflow
@@ -52,7 +52,7 @@ configMapGenerator:
   name: kubeflow-config
 - name: aws-config
   envs:
-  - ./config/aws.env
+  - ./config/params.env
 - name: ml-pipeline-ui-configmap
   behavior: replace
   files:
