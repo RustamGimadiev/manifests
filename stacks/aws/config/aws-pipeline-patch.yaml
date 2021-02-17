@@ -1,23 +1,11 @@
+$patch: merge
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ml-pipeline-ui
 spec:
-  selector:
-    app: "ml-pipeline-ui"
-    app.kubernetes.io/name: kubeflow-pipelines
-    app.kubernetes.io/component: ml-pipeline
   template:
-    metadata:
-      label:
-        app: "ml-pipeline-ui"
-        app.kubernetes.io/name: kubeflow-pipelines
-        app.kubernetes.io/component: ml-pipeline
     spec:
-      volumes:
-        - name: config-volume
-          configMap:
-            name: ml-pipeline-ui-configmap
       containers:
         - name: ml-pipeline-ui
           env:
@@ -33,21 +21,13 @@ spec:
                   key: aws-access-key-id
 
 ---
+$patch: merge
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ml-pipeline
 spec:
-  selector:
-    app: "ml-pipeline"
-    app.kubernetes.io/name: kubeflow-pipelines
-    app.kubernetes.io/component: ml-pipeline
   template:
-    metadata:
-      label:
-        app: "ml-pipeline"
-        app.kubernetes.io/name: kubeflow-pipelines
-        app.kubernetes.io/component: ml-pipeline
     spec:
       containers:
         - name: ml-pipeline-api-server
@@ -71,12 +51,12 @@ spec:
                   key: aws-s3-region
             - name: DBCONFIG_USER
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: aws-rds-username
                   name: aws-config
             - name: DBCONFIG_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: aws-rds-password
                   name: aws-config
             - name: DBCONFIG_HOST
@@ -86,11 +66,11 @@ spec:
                   name: aws-config
             - name: OBJECTSTORECONFIG_ACCESSKEY
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: aws-access-key-id
                   name: aws-config
             - name: OBJECTSTORECONFIG_SECRETACCESSKEY
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: aws-secret-access-key
                   name: aws-config

@@ -40,7 +40,7 @@ generatorOptions:
 secretGenerator:
 - name: aws-secrets
   envs:
-  - ./config/params.env
+  - ./config/aws.env
 configMapGenerator:
 - name: workflow-controller-configmap
   namespace: kubeflow
@@ -61,7 +61,6 @@ patchesStrategicMerge:
 - config/aws-pipeline-patch.yaml
 - config/aws-metadata-patch.yaml
 - config/aws-cache-patch.yaml
-- config/aws-argo-patch.yaml
 vars:
 # AWS related vars
 - name: aws-s3-bucket-name

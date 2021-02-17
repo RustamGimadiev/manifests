@@ -1,0 +1,24 @@
+Encountered error applying application kubeflow-apps:  
+  (kubeflow.error): 
+    Code 500 with message:
+      Apply.Run :
+        [
+        error when creating "/tmp/kout190207783": 
+          Deployment.apps "cache-server" is invalid: [
+            spec.template.spec.containers[0].env[4].valueFrom: Invalid value: "": may not have more than one field specified at a time,
+            spec.template.spec.containers[0].env[5].valueFrom: Invalid value: "": may not have more than one field specified at a time
+            ],
+        error when creating "/tmp/kout190207783": 
+          Deployment.apps "ml-pipeline" is invalid: [
+            spec.selector: Required value,
+            spec.template.metadata.labels: Invalid value: map[string]string{"app":"ml-pipeline"}: `selector` does not match template `labels`, 
+            spec.template.spec.containers[0].image: Required value
+          ],
+        error when creating "/tmp/kout190207783": 
+          Deployment.apps "ml-pipeline-ui" is invalid: [
+            spec.selector: Required value, 
+            spec.template.metadata.labels: Invalid value: map[string]string{"app":"ml-pipeline-ui"}: `selector` does not match template `labels`, 
+            spec.template.spec.containers[0].image: Required value
+          ]
+        ] 
+        filename="kustomize/kustomize.go:266"
