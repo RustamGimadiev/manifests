@@ -3,7 +3,16 @@ kind: Deployment
 metadata:
   name: ml-pipeline-ui
 spec:
+  selector:
+    app: "ml-pipeline-ui"
+    app.kubernetes.io/name: kubeflow-pipelines
+    app.kubernetes.io/component: ml-pipeline
   template:
+    metadata:
+      label:
+        app: "ml-pipeline-ui"
+        app.kubernetes.io/name: kubeflow-pipelines
+        app.kubernetes.io/component: ml-pipeline
     spec:
       volumes:
         - name: config-volume
@@ -29,10 +38,20 @@ kind: Deployment
 metadata:
   name: ml-pipeline
 spec:
+  selector:
+    app: "ml-pipeline"
+    app.kubernetes.io/name: kubeflow-pipelines
+    app.kubernetes.io/component: ml-pipeline
   template:
+    metadata:
+      label:
+        app: "ml-pipeline"
+        app.kubernetes.io/name: kubeflow-pipelines
+        app.kubernetes.io/component: ml-pipeline
     spec:
       containers:
-        - env:
+        - name: ml-pipeline-api-server
+          env:
             - name: OBJECTSTORECONFIG_SECURE
               value: "true"
             - name: OBJECTSTORECONFIG_BUCKETNAME
@@ -75,4 +94,3 @@ spec:
                 configMapKeyRef:
                   key: aws-secret-access-key
                   name: aws-config
-          name: ml-pipeline-api-server

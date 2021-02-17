@@ -2,9 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cache-server
-  # namespace: kubeflow
 spec:
+  selector:
+    app.kubernetes.io/name: kubeflow-pipelines
+    app.kubernetes.io/component: ml-pipeline
   template:
+    metadata:
+      label:
+        app.kubernetes.io/name: kubeflow-pipelines
+        app.kubernetes.io/component: ml-pipeline
     spec:
       containers:
       - name: server

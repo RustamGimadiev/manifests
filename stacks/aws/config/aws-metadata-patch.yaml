@@ -7,7 +7,8 @@ spec:
   template:
     spec:
       containers:
-      - args:
+      - name: container
+        args:
         - --grpc_port=$(METADATA_GRPC_SERVICE_PORT)
         - --mysql_config_host=$(aws-rds-address)
         - --mysql_config_database=$(MYSQL_DATABASE)
@@ -23,4 +24,3 @@ spec:
             name: aws-config
         - configMapRef:
             name: metadata-grpc-configmap
-        name: container
